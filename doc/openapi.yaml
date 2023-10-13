@@ -432,14 +432,14 @@ paths:
               example:
                 status: error
                 data:
-                  id:
+                  id: 
                   email: test@example.com
                   allow_password_change: false
                   first_name: Johnny
                   last_name: Perez
                   username: test
-                  created_at:
-                  updated_at:
+                  created_at: 
+                  updated_at: 
                   provider: email
                   uid: test@example.com
                 errors:
