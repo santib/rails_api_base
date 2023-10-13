@@ -13,4 +13,4 @@ end
 # Sort endpoints alphabetically
 file['paths'] = file['paths'].sort.to_h
 File.write(PATH, YAML.dump(file))
-FileUtils.cp(PATH, "./tmp/openapi.#{ENV['KNAPSACK_CI_NODE_INDEX']}.yaml")
+FileUtils.cp(PATH, "./tmp/openapi.#{ENV['CI_NODE_INDEX']}.yaml")

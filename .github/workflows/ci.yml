@@ -113,6 +113,8 @@ jobs:
           name: coverage
           path: "coverage/coverage.${{ matrix.ci_node_index }}.json"
       - name: Merge API docs
+        env:
+          CI_NODE_INDEX: ${{ matrix.ci_node_index }}
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: bundle exec ./bin/merge-api-docs.rb
       - name: Upload partial api docs
@@ -166,6 +168,6 @@ jobs:
         run: |
           git config --global user.name 'GitHub Bot'
           git config --global user.email 'github_bot@users.noreply.github.com'
-          git commit add "doc/openapi.yaml"
+          git add "doc/openapi.yaml"
           git commit -m "Update API Docs"
           git push origin main
