@@ -135,19 +135,19 @@ jobs:
           echo "GIT_BRANCH=$GITHUB_HEAD_REF" >> $GITHUB_ENV
           echo "GIT_COMMIT_SHA=$(git rev-parse origin/$GITHUB_HEAD_REF)" >> $GITHUB_ENV
         if: github.event_name == 'pull_request'
-      - name: Setup Code Climate test-reporter
-        run: |
-          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-          chmod +x ./cc-test-reporter
-      - name: download coverage reports
-        uses: actions/download-artifact@v2
-        with:
-          name: coverage
-          path: coverage/coverage.*.json
-      - name: report coverage
-        run: |
-          ./cc-test-reporter sum-coverage coverage/**/*.json
-          ./cc-test-reporter upload-coverage
+          #      - name: Setup Code Climate test-reporter
+          #        run: |
+          #          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+          #          chmod +x ./cc-test-reporter
+          #      - name: download coverage reports
+          #        uses: actions/download-artifact@v2
+          #        with:
+          #          name: coverage
+          #          path: coverage/coverage.*.json
+          #      - name: report coverage
+          #        run: |
+          #          ./cc-test-reporter sum-coverage coverage/**/*.json
+          #          ./cc-test-reporter upload-coverage
       - name: Setup Ruby
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: ruby/setup-ruby@v1
