@@ -8,6 +8,7 @@ on:
 env:
   RAILS_ENV: test
   CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+  PARALLEL_TEST_FIRST_IS_1: true
 
 jobs:
   linters:
@@ -123,7 +124,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: api_docs
-          path: "tmp/openapi.${{ matrix.ci_node_index }}.yaml"
+          path: "tmp/openapi${{ matrix.ci_node_index }}.yaml"
 
   merge_results:
     name: Merge Results
@@ -161,8 +162,10 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: api_docs
-          path: tmp/openapi.*.yaml
+          path: tmp/
       - name: Merge API docs
+        env:
+          MOVE_TMP_FILES: true
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: bundle exec ./bin/merge-api-docs.rb
       - name: Commit api docs

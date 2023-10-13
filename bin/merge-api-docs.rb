@@ -6,11 +6,15 @@ require 'yaml'
 
 PATH = './doc/openapi.yaml'.freeze
 
-file = YAML.safe_load(File.read(PATH))
-Dir.glob('./doc/openapi?.yaml').each do |filename|
-  file.deep_merge!(YAML.safe_load(File.read(filename)))
+if ENV['MOVE_TMP_FILES']
+  FileUtils.mv(Dir.glob('./tmp/openapi?*.yaml'), './doc/')
+end
+
+content = {}
+Dir.glob('./doc/openapi?*.yaml').each do |filename|
+  content.deep_merge!(YAML.safe_load(File.read(filename)))
 end
 # Sort endpoints alphabetically
-file['paths'] = file['paths'].sort.to_h
-File.write(PATH, YAML.dump(file))
-FileUtils.cp(PATH, "./tmp/openapi.#{ENV['CI_NODE_INDEX']}.yaml")
+content['paths'] = content['paths'].sort.to_h
+File.write(PATH, YAML.dump(content))
+FileUtils.cp(PATH, "./tmp/openapi#{ENV['CI_NODE_INDEX']}.yaml")
