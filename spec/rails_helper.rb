@@ -46,15 +46,6 @@ RSpec.configure do |config|
 
   # Reset previous flipper instance
   config.before { Flipper.instance = nil }
-
-  # Freeze data to not change OPENAPI docs
-  if ENV['OPENAPI']
-    ActiveRecord::Base.connection.tables.each do |t|
-      ActiveRecord::Base.connection.reset_pk_sequence!(t)
-    end
-    Kernel.srand config.seed
-    config.before(:all) { Faker::Config.random = Random.new(config.seed) }
-  end
 end
 
 Shoulda::Matchers.configure do |config|
