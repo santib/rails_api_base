@@ -45,7 +45,6 @@ group :development, :test do
   gem 'parallel_tests', '~> 4.3'
   gem 'pry-byebug', '~> 3.9', platform: :mri
   gem 'pry-rails', '~> 0.3.9'
-  gem 'rspec_api_documentation', '~> 6.1.0'
   gem 'rspec-rails', '~> 6.0'
 end
 
@@ -71,6 +70,7 @@ group :test do
   gem 'faker', '~> 3.2'
   gem 'pg_query', '~> 4.2.3'
   gem 'prosopite', '~> 1.4.1'
+  gem 'rspec-openapi', '~> 0.9'
   gem 'shoulda-matchers', '~> 5.3'
   gem 'simplecov', '~> 0.22.0', require: false
   gem 'webmock', '~> 3.19'
