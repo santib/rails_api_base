@@ -101,7 +101,6 @@ jobs:
           KNAPSACK_CI_NODE_TOTAL: ${{ matrix.ci_node_total }}
           KNAPSACK_CI_NODE_INDEX: ${{ matrix.ci_node_index }}
           PARALLEL_TESTS_CONCURRENCY: ${{ env.cpu_cores }}
-          OPENAPI: ${{ env.OPENAPI }}
         run: bundle exec parallel_rspec -n $PARALLEL_TESTS_CONCURRENCY -e './bin/parallel_tests'
       - name: Check for missing annotations
         run: bundle exec annotate
