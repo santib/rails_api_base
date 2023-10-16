@@ -77,10 +77,7 @@ jobs:
         if: github.event_name == 'pull_request'
       - name: Set ENV for api docs
         if: github.event_name == 'push' && github.ref == 'refs/heads/main' && git diff ${{ github.event.before }} ${{ github.event.after }} --name-only | grep 'spec/requests/' | wc -l > 0
-        run: |
-          git diff ${{ github.event.before }} ${{ github.event.after }} --name-only
-          git diff ${{ github.event.before }} ${{ github.event.after }} --name-only | grep 'spec/requests/'
-          echo "OPENAPI=true" >> $GITHUB_ENV
+        run: echo "OPENAPI=true" >> $GITHUB_ENV
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
