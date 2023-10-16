@@ -153,6 +153,9 @@ jobs:
           #        run: |
           #          ./cc-test-reporter sum-coverage coverage/**/*.json
           #          ./cc-test-reporter upload-coverage
+      - name: Set ENV for api docs
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: echo "OPENAPI=true" >> $GITHUB_ENV
       - name: Setup Ruby
         if: ${{ env.OPENAPI }}
         uses: ruby/setup-ruby@v1
