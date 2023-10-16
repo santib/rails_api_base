@@ -118,10 +118,10 @@ jobs:
       - name: Merge API docs
         env:
           CI_NODE_INDEX: ${{ matrix.ci_node_index }}
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: ${{ env.OPENAPI }}
         run: bundle exec ./bin/merge-api-docs.rb
       - name: Upload partial api docs
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: ${{ env.OPENAPI }}
         uses: actions/upload-artifact@v2
         with:
           name: api_docs
@@ -154,12 +154,12 @@ jobs:
           #          ./cc-test-reporter sum-coverage coverage/**/*.json
           #          ./cc-test-reporter upload-coverage
       - name: Setup Ruby
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: ${{ env.OPENAPI }}
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
       - name: download api docs
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: ${{ env.OPENAPI }}
         uses: actions/download-artifact@v2
         with:
           name: api_docs
@@ -167,10 +167,10 @@ jobs:
       - name: Merge API docs
         env:
           MOVE_TMP_FILES: true
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: ${{ env.OPENAPI }}
         run: bundle exec ./bin/merge-api-docs.rb
       - name: Commit api docs
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: ${{ env.OPENAPI }}
         run: |
           git config --global user.name 'GitHub Bot'
           git config --global user.email 'github_bot@users.noreply.github.com'
