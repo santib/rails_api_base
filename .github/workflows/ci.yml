@@ -67,6 +67,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Set ENV for codeclimate (pull_request)
         run: |
           git fetch --no-tags --prune --depth=1 origin refs/heads/$GITHUB_HEAD_REF:refs/remotes/origin/$GITHUB_HEAD_REF
@@ -74,8 +76,11 @@ jobs:
           echo "GIT_COMMIT_SHA=$(git rev-parse origin/$GITHUB_HEAD_REF)" >> $GITHUB_ENV
         if: github.event_name == 'pull_request'
       - name: Set ENV for api docs
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && git diff ${{ github.event.push.before }} ${{ github.event.push.after }} --name-only | grep 'spec/requests/' | wc -l > 0 | bc
-        run: echo "OPENAPI=true" >> $GITHUB_ENV
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && git diff ${{ github.event.before }} ${{ github.event.after }} --name-only | grep 'spec/requests/' | wc -l > 0
+        run: |
+          git diff ${{ github.event.before }} ${{ github.event.after }} --name-only
+          git diff ${{ github.event.before }} ${{ github.event.after }} --name-only | grep 'spec/requests/'
+          echo "OPENAPI=true" >> $GITHUB_ENV
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
