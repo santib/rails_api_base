@@ -134,6 +134,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.PAT }}
       - name: Set ENV for codeclimate (pull_request)
         run: |
           git fetch --no-tags --prune --depth=1 origin refs/heads/$GITHUB_HEAD_REF:refs/remotes/origin/$GITHUB_HEAD_REF
@@ -174,8 +176,6 @@ jobs:
         run: bundle exec ./bin/merge-api-docs.rb
       - name: Commit api docs
         if: ${{ env.OPENAPI }}
-        with:
-          token: ${{ secrets.PAT }}
         run: |
           git config --global user.name 'GitHub Bot'
           git config --global user.email 'github_bot@users.noreply.github.com'
