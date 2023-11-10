@@ -17,10 +17,6 @@ module Api
       rescue_from ActiveRecord::RecordInvalid,         with: :render_record_invalid
       rescue_from ActionController::ParameterMissing,  with: :render_parameter_missing
 
-      def status
-        render json: { online: true }
-      end
-
       private
 
       def render_not_found(exception)
